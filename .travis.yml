@@ -1,0 +1,22 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t justin0979/react-test -f ./client/Dockerfile.dev ./client
+
+script:
+  - docker run justin0979/react-test npm run test -- --coverage
+
+after_success:
+  - docker build -t justin0979/fc-client ./client
+  - docker build -t justin0979/fc-worker ./worker
+  - docker build -t justin0979/fc-nginx ./nginx
+  - docker build -t justin0979/fc-server ./server
+  # Log in to the docker CLI
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images
+  - docker push justin0979/fc-client
+  - docker push justin0979/fc-worker
+  - docker push justin0979/fc-nginx
+  - docker push justin0979/fc-server
