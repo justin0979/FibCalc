@@ -20,3 +20,16 @@ after_success:
   - docker push justin0979/fc-worker
   - docker push justin0979/fc-nginx
   - docker push justin0979/fc-server
+
+deploy:
+  edge: true
+  provider: elasticbeanstalk
+  region: us-east-2
+  app: fibcalc
+  env: Fibcalc-env
+  bucket_name: elasticbeanstalk-us-east-2-519144714901
+  bucket_path: fib-calc
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
