@@ -67,6 +67,7 @@ const Fib = () => {
 
       <h3>Calculated values:</h3>
       {renderValues()}
+      <p>Hopefully something shows above this</p>
     </div>
   );
 };
